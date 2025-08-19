@@ -70,5 +70,3 @@ Production-ready demo
 
 👤 Author
 Uday G – Senior DevOps Engineer exploring AI + FinOps + DevOps.
-
->>>>>>> 43e7e0d (read me add)
