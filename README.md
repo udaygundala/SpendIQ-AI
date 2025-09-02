@@ -70,3 +70,64 @@ Production-ready demo
 
 👤 Author
 Uday G – Senior DevOps Engineer exploring AI + FinOps + DevOps.
+
+Sample Data schema 
+## 📊 SpendIQ Normalized Sample Dataset
+
+This repository includes a sample dataset `spendiq_normalized_sample_data.csv` that simulates **multi-cloud spend data** across AWS, Azure, and GCP.  
+It is intended for **SpendIQ PoC demonstrations**, dashboards, and analytics.
+
+### 🔹 Dataset Overview
+- **Time Period:** 90 days (June–Aug 2025)
+- **Clouds Covered:** AWS, Azure, GCP
+- **Granularity:** Daily cost per service, per account/subscription/project
+
+### 🔹 Schema
+| Column             | Description                                                                 |
+|---------------------|-----------------------------------------------------------------------------|
+| `Date`             | Billing date (daily granularity)                                           |
+| `Cloud`            | Cloud vendor: AWS / Azure / GCP                                            |
+| `RootEntity`       | Top-level organization (AWS Org Root / Azure Tenant / GCP Org)             |
+| `HierarchyLevel1`  | Mid-level grouping (AWS OU / Azure Mgmt Group / GCP Folder)                |
+| `HierarchyLevel2`  | Account / Subscription / Project                                           |
+| `HierarchyLevel3`  | Resource Group / Tag Group / SKU                                           |
+| `Service`          | Cloud service name (e.g., EC2, AzureML, Vertex AI)                         |
+| `Category`         | Spend category: Infra Spend / AI Spend / GenAI Spend                       |
+| `UsageType`        | OnDemand / Reserved / Spot / Preemptible                                   |
+| `Cost (USD)`       | Normalized cost in USD                                                     |
+| `Tags`             | Flexible key-value metadata (e.g., `env`, `team`, `app`, `costCenter`)     |
+| `Dimensions`       | Cloud-specific metadata (e.g., `region`, `sku`, `billingSource`)           |
+
+### 🔹 Key Features
+- **Multi-level hierarchy** across all 3 clouds (Org → Account → Service → Resource).
+- **AI/GenAI tracking**: Special tagging for services like SageMaker, AzureML, Vertex AI, Bedrock, Azure OpenAI.
+- **Usage types**: Helps distinguish OnDemand vs Reserved vs Spot/Preemptible usage.
+- **Tag-driven governance**: Cost attribution by team, app, environment, cost center.
+- **Extensible**: Schema can support new tags, services, or dimensions without schema redesign.
+
+### 🔹 Example Row
+```json
+{
+  "Date": "2025-08-12",
+  "Cloud": "Azure",
+  "RootEntity": "Tenant-456",
+  "HierarchyLevel1": "Mgmt-AI",
+  "HierarchyLevel2": "Sub-2005",
+  "HierarchyLevel3": "RG-GenAI",
+  "Service": "Azure OpenAI",
+  "Category": "GenAI Spend",
+  "UsageType": "OnDemand",
+  "Cost (USD)": 1125.40,
+  "Tags": {
+    "env": "prod",
+    "team": "NLP",
+    "app": "customer-chatbot",
+    "costCenter": "CC-2001"
+  },
+  "Dimensions": {
+    "region": "eastus",
+    "sku": "gpt-4-32k",
+    "billingSource": "CostManagementAPI"
+  }
+}
+
